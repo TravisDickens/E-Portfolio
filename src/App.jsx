@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { Typewriter } from 'react-simple-typewriter';
 
 
 export default function EPortfolio() {
@@ -59,14 +60,33 @@ export default function EPortfolio() {
     >
       Hi, I’m Travis Dickens
     </motion.h1>
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.6, duration: 0.8 }}
-      className="text-2xl font-medium bg-gradient-to-r from-[#E84A27] to-[#D63E1A] text-transparent bg-clip-text mb-8"
-    >
-      Software Developer
-    </motion.p>
+   <motion.p
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ delay: 0.6, duration: 0.8 }}
+  className="text-xl text-gray-400 mb-8"
+>
+  <span className="block text-2xl md:text-3xl  font-medium bg-gradient-to-r from-[#E84A27] to-[#D63E1A] text-transparent bg-clip-text mb-8">
+
+    Software Developer
+  </span>
+  <span className="inline-block text-lg md:text-xl text-gray-300 font-mono">
+    I build{" "}
+    <span className="text-[#E84A27]">
+      <Typewriter
+        words={['full-stack Applications.', 'secure APIs.', 'intuitive UIs.', 'cloud solutions.']}
+        loop={true}
+        cursor
+        cursorStyle="|"
+        typeSpeed={70}
+        deleteSpeed={50}
+        delaySpeed={1000}
+      />
+    </span>
+  </span>
+</motion.p>
+
+
     <motion.div
       initial={{ scale: 1 }}
       animate={{ scale: [1, 1.05, 1] }}
