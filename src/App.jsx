@@ -4,10 +4,41 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Typewriter } from 'react-simple-typewriter';
+import { useEffect } from "react";
 
 
 export default function EPortfolio() {
   
+useEffect(() => {
+  const canvas = document.getElementById("fractalTree");
+  const ctx = canvas.getContext("2d");
+
+  function drawTree(x, y, angle, depth, branchWidth, color1, color2) {
+    if (depth === 0) return;
+
+    const xEnd = x + Math.cos(angle) * depth * 7; // shorter branches
+    const yEnd = y + Math.sin(angle) * depth * 7;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(xEnd, yEnd);
+    ctx.strokeStyle = depth < 3 ? color2 : color1;
+    ctx.lineWidth = branchWidth;
+    ctx.stroke();
+
+    drawTree(xEnd, yEnd, angle - 0.4, depth - 1, branchWidth * 0.7, color1, color2);
+    drawTree(xEnd, yEnd, angle + 0.4, depth - 1, branchWidth * 0.7, color1, color2);
+  }
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(canvas.width / 2, canvas.height); // start at bottom center
+  drawTree(0, 0, -Math.PI / 2, 8, 6, "#E84A27", "#D63E1A"); // reduced depth & width
+  ctx.restore();
+}, []);
+
+
+
   return (
     <div className="relative min-h-screen bg-[#0D0D0D] text-gray-200 flex flex-col items-center p-6 overflow-hidden">
     
@@ -46,20 +77,40 @@ export default function EPortfolio() {
   
   
   {/* Hero Content */}
-  <motion.div
-    initial={{ opacity: 0, y: -40 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 1 }}
-    className="relative z-20 flex flex-col items-center justify-center h-full px-4 text-center"
-  >
-    <motion.h1
-      initial={{ scale: 0.8 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="text-7xl font-extrabold text-white neonText mb-4"
-    >
-      Hi, I’m Travis Dickens
-    </motion.h1>
+ <motion.div
+  initial={{ opacity: 0, y: -40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1 }}
+  className="relative z-20 flex flex-col items-center justify-center h-full px-4 text-center"
+>
+  {/* Fractal Tree Canvas */}
+  <canvas
+    id="fractalTree"
+    className="absolute top-0 left-1/2 transform -translate-x-1/2 z-10"
+    width={600}
+    height={400}
+  ></canvas>
+
+   <motion.h1
+  initial={{ scale: 0.8 }}
+  animate={{ scale: 1 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  className="text-7xl font-extrabold text-white neonText mb-4 mt-20"
+>
+  Hi, I’m{" "}
+  <span className="text-[#E84A27]">
+    <Typewriter
+      words={['Travis Dickens']}
+      loop={false}
+      cursor
+      cursorStyle="|"
+      typeSpeed={70}
+      deleteSpeed={50}
+      delaySpeed={1000}
+    />
+  </span>
+</motion.h1>
+
    <motion.p
   initial={{ opacity: 0 }}
   animate={{ opacity: 1 }}
@@ -70,6 +121,7 @@ export default function EPortfolio() {
 
     Software Developer
   </span>
+{/* 
   <span className="inline-block text-lg md:text-xl text-gray-300 font-mono">
     I build{" "}
     <span className="text-[#E84A27]">
@@ -84,6 +136,7 @@ export default function EPortfolio() {
       />
     </span>
   </span>
+   */}
 </motion.p>
 
 
